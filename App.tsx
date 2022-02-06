@@ -1,5 +1,4 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
 import Tabs from "./navigation/Tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import {
@@ -8,8 +7,9 @@ import {
    DrawerItem,
    DrawerItemList,
 } from "@react-navigation/drawer";
-import { Provider } from "react-redux";
+import { Provider, useDispatch } from "react-redux";
 import { store } from "./redux/store";
+import { getJoke } from "./redux/actions/actions";
 
 const AppWrapper = () => {
    return (
@@ -21,6 +21,7 @@ const AppWrapper = () => {
 
 const App = () => {
    const Drawer = createDrawerNavigator();
+   const dispatch = useDispatch();
 
    return (
       <NavigationContainer>
@@ -33,7 +34,7 @@ const App = () => {
                      <DrawerItemList {...props} />
                      <DrawerItem
                         label="show me a joke"
-                        onPress={() => console.log("button clicked")}
+                        onPress={() => dispatch(getJoke())}
                      />
                   </DrawerContentScrollView>
                );
@@ -50,12 +51,3 @@ const App = () => {
 };
 
 export default AppWrapper;
-
-const styles = StyleSheet.create({
-   container: {
-      flex: 1,
-      backgroundColor: "#fff",
-      alignItems: "center",
-      justifyContent: "center",
-   },
-});
