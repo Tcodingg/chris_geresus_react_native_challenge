@@ -1,10 +1,11 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/rootStore";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import { AntDesign } from "@expo/vector-icons";
+import { closePunchline, openPunchline } from "../redux/actions/actions";
 
 Notifications.setNotificationHandler({
    handleNotification: async () => ({
@@ -19,8 +20,11 @@ interface navigationInterface {
 }
 const Tab1: React.FC<navigationInterface> = ({ navigation }) => {
    const {
-      newJoke: { setup, delivery, joke },
-   } = useSelector((state: RootState) => state.jokeReducer);
+      jokeReducer: {
+         newJoke: { setup, delivery, joke },
+      },
+      punchlineReducer,
+   } = useSelector((state: RootState) => state);
    console.log(setup, delivery, joke);
    const [jokePunchline, setJokePunchline] = useState<string | undefined>("");
 
@@ -49,6 +53,7 @@ const Tab1: React.FC<navigationInterface> = ({ navigation }) => {
          Notifications.addNotificationResponseReceivedListener((response) => {
             navigation.closeDrawer();
             navigation.navigate("Tab1");
+            dispatch(openPunchline());
          });
 
       return () => {
@@ -63,8 +68,22 @@ const Tab1: React.FC<navigationInterface> = ({ navigation }) => {
 
    return (
       <View style={styles.container}>
-         <Text>{jokePunchline}</Text>
-         <Text>Tab 1</Text>
+         <View>
+            <Text>Tab 1</Text>
+         </View>
+         {punchlineReducer && (
+            <View style={[styles.punchlineContainer, { display: "flex" }]}>
+               <View style={styles.punchlineWrapper}>
+                  <Text style={styles.punchlineText}>{jokePunchline}</Text>
+                  <TouchableOpacity
+                     style={styles.closeIcon}
+                     onPress={() => dispatch(closePunchline())}
+                  >
+                     <AntDesign name="closecircle" size={24} color="black" />
+                  </TouchableOpacity>
+               </View>
+            </View>
+         )}
       </View>
    );
 };
@@ -77,6 +96,43 @@ const styles = StyleSheet.create({
       backgroundColor: "#fff",
       alignItems: "center",
       justifyContent: "center",
+      position: "relative",
+   },
+   punchlineContainer: {
+      position: "absolute",
+      backgroundColor: "white",
+      height: 300,
+      width: 300,
+      justifyContent: "center",
+      alignItems: "center",
+      borderRadius: 10,
+      paddingHorizontal: 10,
+      shadowColor: "#000",
+
+      shadowOffset: {
+         width: 0,
+         height: 2,
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 3.84,
+
+      elevation: 5,
+   },
+   punchlineWrapper: {
+      height: "100%",
+      width: "100%",
+      position: "relative",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+   },
+   punchlineText: {
+      textAlign: "center",
+   },
+   closeIcon: {
+      position: "absolute",
+      right: 0,
+      top: 10,
    },
 });
 

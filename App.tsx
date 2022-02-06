@@ -9,7 +9,7 @@ import {
 } from "@react-navigation/drawer";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { store } from "./redux/store";
-import { getJoke } from "./redux/actions/actions";
+import { closePunchline, getJoke } from "./redux/actions/actions";
 import { useEffect } from "react";
 import { RootState } from "./redux/rootStore";
 import { schedulePushNotification } from "./screens/Tab1";
@@ -37,18 +37,23 @@ const App = () => {
       }
    }, [setup, joke, delivery]);
 
+   const showMeJokeBtn = () => {
+      dispatch(getJoke());
+      dispatch(closePunchline());
+   };
+
    return (
       <NavigationContainer>
          <StatusBar hidden={false} />
          <Drawer.Navigator
-            initialRouteName="Tabs"
+            initialRouteName="Tab1"
             drawerContent={(props) => {
                return (
                   <DrawerContentScrollView {...props}>
                      <DrawerItemList {...props} />
                      <DrawerItem
                         label="show me a joke"
-                        onPress={() => dispatch(getJoke())}
+                        onPress={showMeJokeBtn}
                      />
                   </DrawerContentScrollView>
                );
