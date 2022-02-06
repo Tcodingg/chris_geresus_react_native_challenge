@@ -22,6 +22,7 @@ const Tab1: React.FC<navigationInterface> = ({ navigation }) => {
    } = useSelector((state: RootState) => state.jokeReducer);
    console.log(setup, delivery, joke);
    const [jokeSetup, setJokeSetup] = useState<string | undefined>("");
+
    useEffect(() => {
       setJokeSetup(setup ? setup : joke);
    }, [setup, joke, delivery]);
@@ -78,7 +79,7 @@ const styles = StyleSheet.create({
    },
 });
 
-export async function schedulePushNotification(jokeSetup: string) {
+export async function schedulePushNotification(jokeSetup: string | undefined) {
    await Notifications.scheduleNotificationAsync({
       content: {
          title: "Setup",

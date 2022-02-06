@@ -7,9 +7,12 @@ import {
    DrawerItem,
    DrawerItemList,
 } from "@react-navigation/drawer";
-import { Provider, useDispatch } from "react-redux";
+import { Provider, useDispatch, useSelector } from "react-redux";
 import { store } from "./redux/store";
 import { getJoke } from "./redux/actions/actions";
+import { useEffect } from "react";
+import { RootState } from "./redux/rootStore";
+import { schedulePushNotification } from "./screens/Tab1";
 
 const AppWrapper = () => {
    return (
@@ -22,6 +25,16 @@ const AppWrapper = () => {
 const App = () => {
    const Drawer = createDrawerNavigator();
    const dispatch = useDispatch();
+
+   const {
+      newJoke: { setup, joke, delivery },
+   } = useSelector((state: RootState) => state.jokeReducer);
+
+   useEffect(() => {
+      schedulePushNotification(setup ? setup : joke);
+   }, [setup, joke, delivery]);
+
+   useEffect(() => {}, [setup, delivery, joke]);
 
    return (
       <NavigationContainer>
