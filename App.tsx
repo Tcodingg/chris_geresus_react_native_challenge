@@ -30,11 +30,12 @@ const App = () => {
       newJoke: { setup, joke, delivery },
    } = useSelector((state: RootState) => state.jokeReducer);
 
+   // send push notification
    useEffect(() => {
-      schedulePushNotification(setup ? setup : joke);
+      if (setup || joke) {
+         schedulePushNotification(setup ? setup : joke);
+      }
    }, [setup, joke, delivery]);
-
-   useEffect(() => {}, [setup, delivery, joke]);
 
    return (
       <NavigationContainer>

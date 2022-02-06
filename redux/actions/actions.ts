@@ -21,3 +21,17 @@ export const getJoke = () => async (dispatch: Dispatch<Actions>) => {
       });
    }
 };
+
+// open and close punchline
+export const openPunchline = () => (dispatch: Dispatch<Actions>) => {
+   dispatch({
+      type: actionTypes.OPEN_PUNCHLINE,
+      payload: true,
+   });
+};
+export const closePunchline = () => (dispatch: Dispatch<Actions>) => {
+   dispatch({
+      type: actionTypes.CLOSE_PUNCHLINE,
+      payload: false,
+   });
+};

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../redux/rootStore";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
+import { AntDesign } from "@expo/vector-icons";
 
 Notifications.setNotificationHandler({
    handleNotification: async () => ({
@@ -21,10 +22,10 @@ const Tab1: React.FC<navigationInterface> = ({ navigation }) => {
       newJoke: { setup, delivery, joke },
    } = useSelector((state: RootState) => state.jokeReducer);
    console.log(setup, delivery, joke);
-   const [jokeSetup, setJokeSetup] = useState<string | undefined>("");
+   const [jokePunchline, setJokePunchline] = useState<string | undefined>("");
 
    useEffect(() => {
-      setJokeSetup(setup ? setup : joke);
+      setJokePunchline(delivery ? delivery : joke);
    }, [setup, joke, delivery]);
 
    const dispatch = useDispatch();
@@ -62,7 +63,7 @@ const Tab1: React.FC<navigationInterface> = ({ navigation }) => {
 
    return (
       <View style={styles.container}>
-         <Text>{jokeSetup}</Text>
+         <Text>{jokePunchline}</Text>
          <Text>Tab 1</Text>
       </View>
    );

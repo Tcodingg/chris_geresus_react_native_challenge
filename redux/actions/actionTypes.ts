@@ -2,8 +2,8 @@ export enum actionTypes {
    JOKE_LOADING = "JOKE_LOADING",
    JOKE_SUCCESS = "JOKE_SUCCESS",
    JOKE_FAIL = "JOKE_FAIL",
-   SHOW_PUNCHLINE = "SHOW_PUNCHLINE",
-   HIDE_PUNCHLINE = "HIDE_PUNCHLINE",
+   OPEN_PUNCHLINE = "OPEN_PUNCHLINE",
+   CLOSE_PUNCHLINE = "CLOSE_PUNCHLINE",
 }
 
 export interface jokeTypes {
@@ -27,4 +27,18 @@ type actionJokeFail = {
    payload: any;
 };
 
-export type Actions = actionJokeLoading | actionJokeSuccess | actionJokeFail;
+type actionOpenPunchline = {
+   type: actionTypes.OPEN_PUNCHLINE;
+   payload: boolean;
+};
+type actionClosePunchline = {
+   type: actionTypes.CLOSE_PUNCHLINE;
+   payload: boolean;
+};
+
+export type Actions =
+   | actionJokeLoading
+   | actionJokeSuccess
+   | actionJokeFail
+   | actionOpenPunchline
+   | actionClosePunchline;
