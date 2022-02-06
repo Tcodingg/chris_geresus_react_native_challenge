@@ -25,7 +25,7 @@ const Tab1: React.FC<navigationInterface> = ({ navigation }) => {
       },
       punchlineReducer,
    } = useSelector((state: RootState) => state);
-   console.log(setup, delivery, joke);
+
    const [jokePunchline, setJokePunchline] = useState<string | undefined>("");
 
    useEffect(() => {
