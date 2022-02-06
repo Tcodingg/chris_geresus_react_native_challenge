@@ -8,8 +8,18 @@ import {
    DrawerItem,
    DrawerItemList,
 } from "@react-navigation/drawer";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
-export default function App() {
+const AppWrapper = () => {
+   return (
+      <Provider store={store}>
+         <App />
+      </Provider>
+   );
+};
+
+const App = () => {
    const Drawer = createDrawerNavigator();
 
    return (
@@ -37,7 +47,9 @@ export default function App() {
          </Drawer.Navigator>
       </NavigationContainer>
    );
-}
+};
+
+export default AppWrapper;
 
 const styles = StyleSheet.create({
    container: {
