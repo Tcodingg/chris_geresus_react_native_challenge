@@ -1,13 +1,26 @@
 import { Actions, actionTypes } from "../actions/actionTypes";
 
-const initialState: boolean = false;
+interface punchlineInterface {
+   showPunchline: boolean;
+}
 
-export const punchlineReducer = (state = initialState, action: Actions) => {
+const initialState: punchlineInterface = {
+   showPunchline: false,
+};
+
+export const punchlineReducer = (
+   state: punchlineInterface = initialState,
+   action: Actions
+): punchlineInterface => {
    switch (action.type) {
       case actionTypes.OPEN_PUNCHLINE:
-         return true;
+         return {
+            showPunchline: true,
+         };
       case actionTypes.CLOSE_PUNCHLINE:
-         return false;
+         return {
+            showPunchline: false,
+         };
       default:
          return state;
    }
