@@ -23,7 +23,7 @@ const Tab1: React.FC<navigationInterface> = ({ navigation }) => {
       jokeReducer: {
          newJoke: { setup, delivery, joke },
       },
-      punchlineReducer,
+      punchlineReducer: { showPunchline },
    } = useSelector((state: RootState) => state);
 
    const [jokePunchline, setJokePunchline] = useState<string | undefined>("");
@@ -71,7 +71,7 @@ const Tab1: React.FC<navigationInterface> = ({ navigation }) => {
          <View>
             <Text>Tab 1</Text>
          </View>
-         {punchlineReducer && (
+         {showPunchline && (
             <View style={[styles.punchlineContainer, { display: "flex" }]}>
                <View style={styles.punchlineWrapper}>
                   <Text style={styles.punchlineText}>{jokePunchline}</Text>
